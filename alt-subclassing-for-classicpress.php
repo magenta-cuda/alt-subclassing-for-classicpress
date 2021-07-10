@@ -1,6 +1,8 @@
 <?php
 /*
  * Plugin Name: Alt Subclassing for ClassicPress Experiment
+ * Description: Proof of concept for ClassicPress issue #749.
+ * Author: Magenta Cuda
  */
 
 class Alpha {
@@ -21,7 +23,7 @@ class Alpha {
         error_log( 'beta0():$gamma = ' . $gamma );
         ++$this->epsilon;
         error_log( 'beta0():$this = ' . print_r( $this, true ) );
-        $result = $epsilon + $gamma;
+        $result = $this->epsilon + $gamma;
         error_log( 'beta0():$result = ' . $result );
         return $result;
     }
@@ -69,6 +71,6 @@ add_action( 'init', function() {
 
     error_log( '#######################################################################################' );
     $alpha  = new Alpha();
-    $result = $alpha->beta( 1 );
+    $result = $alpha->beta( 0 );
     error_log( '#######################################################################################' . "\n\n\n\n\n" );
 } );
