@@ -8,7 +8,7 @@ class Alpha {
 
     public function beta( $gamma ) {
         ++$this->epsilon;
-        return $epsilon + $gamma;
+        return $this->epsilon + $gamma;
     }
 }
 
@@ -31,7 +31,7 @@ class Alpha {
 
     public function beta( $gamma ) {
         ++$this->epsilon;
-        return $epsilon + $gamma;
+        return $this->epsilon + $gamma;
     }
 }
 
@@ -58,7 +58,7 @@ class Alpha {
     # beta0() is the original beta()
     public function beta0( $gamma ) {
         ++$this->epsilon;
-        return $epsilon + $gamma;
+        return $this->epsilon + $gamma;
     }
 }
 
