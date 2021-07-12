@@ -15,8 +15,6 @@ class Alpha {
 }
 
 class Alpha1 extends Alpha {
-    var $epsilon = 0;
-
     public function beta( $gamma ) {
         $this->epsilon += 10;
         $gamma += 100;
@@ -43,7 +41,7 @@ Transform this class to:
 ```
 class Alpha {
 
-    var $epsilon = 0;
+    public $epsilon = 0;
 
     # beta() now executes an inheritance chain for beta()
     public function beta( $gamma ) {
@@ -101,6 +99,6 @@ add_filter( 'alpha_beta', function( $beta ) {
 }, 200 );
 ```
 
-Here the inheritance chain is dynamically created at execution time. It is not necessary to specify the next link in the source code. This is completely backward compatible. No change in the source code is need for code that uses the class Alpha - the call to beta() is unchanged. Further, the transformation of Alpha can be done programatically (i.e., a programmer is not needed) - a small script can create the wrapper method beta() and rename the original beta() to beta0(). N.B. The properties accessed by the wrappers must be declared public.
+Here the inheritance chain is dynamically created at execution time. It is not necessary to specify the next link in the source code. This is completely backward compatible. No change in the source code is need for code that uses the class Alpha - the call to beta() is unchanged. Further, the transformation of Alpha can be done programatically (i.e., a programmer is not needed) - a small script can create the wrapper method beta() and rename the original beta() to beta0(). N.B. The properties accessed by the wrappers must be declared public, which is a negative to consider.
 
 This example is specifically for non-static methods of classes. A small modification will make it work with static methods of classes as well as global functions.
