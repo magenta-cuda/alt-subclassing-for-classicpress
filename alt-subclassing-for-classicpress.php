@@ -6,7 +6,7 @@
  */
 
 class Alpha {
-    var $epsilon = 0;
+    public $epsilon = 0;
 
     public function beta( $gamma ) {
         error_log( 'beta():$gamma = ' . $gamma );
