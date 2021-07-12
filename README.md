@@ -10,7 +10,7 @@ class Alpha {
 
     public function beta( $gamma ) {
         ++$this->epsilon;
-        return $epsilon + $gamma;
+        return $this->epsilon + $gamma;
     }
 }
 
