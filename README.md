@@ -6,7 +6,7 @@ I am often frustrated using action/filter hooks - no appropriate hook exists or 
 
 ```
 class Alpha {
-    var $epsilon = 0;
+    public $epsilon = 0;
 
     public function beta( $gamma ) {
         ++$this->epsilon;
@@ -27,7 +27,7 @@ The problem with subclassing is the difficulty of installing multiple subclasses
 
 ```
 class Alpha {
-    var $epsilon = 0;
+    public $epsilon = 0;
 
     public function beta( $gamma ) {
         ++$this->epsilon;
