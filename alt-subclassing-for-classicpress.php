@@ -11,6 +11,7 @@ class Alpha {
     public function beta( $gamma ) {
         error_log( 'beta():$gamma = ' . $gamma );
         $delta = apply_filters( 'alpha_beta', [ $this, 'beta0' ] );
+        error_log( 'beta():$delta = ' . print_r( $delta, true ) );
         if ( is_array( $delta ) ) {
             return call_user_func( $delta, $gamma );
         } else {
@@ -37,6 +38,7 @@ add_filter( 'alpha_beta', function( $beta ) {
         ++$_this->epsilon;
         error_log( 'beta1():$_this = ' . print_r( $_this, true ) );
         $gamma += 100;
+        error_log( 'beta1():$inner_beta = ' . print_r( $inner_beta, true ) );
         if ( is_array( $inner_beta ) ) {
             $result = call_user_func( $inner_beta,         $gamma );
         } else {
@@ -56,6 +58,7 @@ add_filter( 'alpha_beta', function( $beta ) {
         $_this->epsilon += 1;
         error_log( 'beta2():$_this = ' . print_r( $_this, true ) );
         $gamma += 10;
+        error_log( 'beta2():$inner_beta = ' . print_r( $inner_beta, true ) );
         if ( is_array( $inner_beta ) ) {
             $result = call_user_func( $inner_beta,         $gamma );
         } else {
