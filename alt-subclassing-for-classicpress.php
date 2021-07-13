@@ -32,17 +32,17 @@ class Alpha {
 
 add_filter( 'alpha_beta', function( $beta ) {
     error_log( 'installing beta1()' );
-    $inner_beta = $beta;
-    return function( $_this, $gamma )  use ( $inner_beta ) {
+    $inner_beta1 = $beta;
+    return function( $_this, $gamma )  use ( $inner_beta1 ) {
         error_log( 'beta1():$gamma = ' . $gamma );
         ++$_this->epsilon;
         error_log( 'beta1():$_this = ' . print_r( $_this, true ) );
         $gamma += 100;
-        error_log( 'beta1():$inner_beta = ' . print_r( $inner_beta, true ) );
-        if ( is_array( $inner_beta ) ) {
-            $result = call_user_func( $inner_beta,         $gamma );
+        error_log( 'beta1():$inner_beta1 = ' . print_r( $inner_beta1, true ) );
+        if ( is_array( $inner_beta1 ) ) {
+            $result = call_user_func( $inner_beta1,         $gamma );
         } else {
-            $result = call_user_func( $inner_beta, $_this, $gamma );
+            $result = call_user_func( $inner_beta1, $_this, $gamma );
         }
         $result += 1000;
         error_log( 'beta1():$result = ' . $result );
@@ -52,17 +52,17 @@ add_filter( 'alpha_beta', function( $beta ) {
 
 add_filter( 'alpha_beta', function( $beta ) {
     error_log( 'installing beta2()' );
-    $inner_beta = $beta;
-    return function( $_this, $gamma ) use ( $inner_beta ) {
+    $inner_beta2 = $beta;
+    return function( $_this, $gamma ) use ( $inner_beta2 ) {
         error_log( 'beta2():$gamma = ' . $gamma );
         $_this->epsilon += 1;
         error_log( 'beta2():$_this = ' . print_r( $_this, true ) );
         $gamma += 10;
-        error_log( 'beta2():$inner_beta = ' . print_r( $inner_beta, true ) );
-        if ( is_array( $inner_beta ) ) {
-            $result = call_user_func( $inner_beta,         $gamma );
+        error_log( 'beta2():$inner_beta2 = ' . print_r( $inner_beta2, true ) );
+        if ( is_array( $inner_beta2 ) ) {
+            $result = call_user_func( $inner_beta2,         $gamma );
         } else {
-            $result = call_user_func( $inner_beta, $_this, $gamma );
+            $result = call_user_func( $inner_beta2, $_this, $gamma );
         }
         $result += 10000;
         error_log( 'beta2():$result = ' . $result );
