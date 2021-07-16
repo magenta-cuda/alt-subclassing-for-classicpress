@@ -5,6 +5,32 @@
  * Author: Magenta Cuda
  */
 
+if ( ! function_exists( 'omega' ) ) :
+    function omega( $gamma ) {
+        $delta = apply_filters( 'omega', 'omega0' );
+        return call_user_func( $delta, $gamma );
+    }
+
+    function omega0( $gamma ) {
+        error_log( 'omega0():$gamma = ' . $gamma );
+        $result = $gamma + 1;
+        error_log( 'omega0():$result = ' . $result );
+        return $result;
+    }
+endif;
+
+add_filter( 'omega', function( $beta ) {
+    $inner_beta1 = $beta;
+    return function( $gamma ) use ( $inner_beta1 ) {
+        $gamma1 = $gamma + 1;
+        error_log( 'omega1():$gamma: ' . $gamma . ' -> ' . $gamma1 );
+        $result = call_user_func( $inner_beta1, $gamma1 );
+        $result1 = $result + 10;
+        error_log( 'omega1():$result: ' . $result . ' -> ' . $result1 );
+        return $result1;
+    };
+}, 100 );
+
 class Alpha {
     public $epsilon = 0;
 
@@ -69,28 +95,6 @@ add_filter( 'alpha_beta', function( $beta ) {
         return $result;
     };
 }, 200 );
-
-function omega( $gamma ) {
-    $delta = apply_filters( 'omega', 'omega0' );
-    return call_user_func( $delta, $gamma );
-}
-
-function omega0( $gamma ) {
-    error_log( 'omega0():$gamma = ' . $gamma );
-    $result = $gamma + 1;
-    error_log( 'omega0():$result = ' . $result );
-    return $result;
-}
-
-add_filter( 'omega', function( $beta ) {
-    $inner_beta1 = $beta;
-    return function( $gamma1 ) use ( $inner_beta1 ) {
-        ++$gamma1;
-        $result1 = call_user_func( $inner_beta1, $gamma1 );
-        $result1 += 10;
-        return $result1;
-    };
-}, 100 );
 
 add_action( 'init', function() {
 
