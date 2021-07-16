@@ -12,6 +12,7 @@ if ( ! function_exists( 'omega' ) ) :
     }
 
     function omega0( $gamma ) {
+        error_log( "omega0():BACKTRACE = \n" . str_replace( ', ', "\n", wp_debug_backtrace_summary() ) );
         error_log( 'omega0():$gamma = ' . $gamma );
         $result = $gamma + 1;
         error_log( 'omega0():$result = ' . $result );
@@ -21,6 +22,7 @@ endif;
 
 add_filter( 'omega', function( $beta ) {
     $inner_beta1 = $beta;
+    error_log( 'installing omega1():$inner_beta1: ' . print_r( $inner_beta1, true ) );
     return function( $gamma ) use ( $inner_beta1 ) {
         $gamma1 = $gamma + 1;
         error_log( 'omega1():$gamma: ' . $gamma . ' -> ' . $gamma1 );
@@ -31,6 +33,18 @@ add_filter( 'omega', function( $beta ) {
     };
 }, 100 );
 
+add_filter( 'omega', function( $beta ) {
+    $inner_beta2 = $beta;
+    error_log( 'installing omega2():$inner_beta2: ' . print_r( $inner_beta2, true ) );
+    return function( $gamma ) use ( $inner_beta2 ) {
+        $gamma1 = $gamma + 1;
+        error_log( 'omega2():$gamma: ' . $gamma . ' -> ' . $gamma1 );
+        $result = call_user_func( $inner_beta2, $gamma1 );
+        $result1 = $result + 100;
+        error_log( 'omega2():$result: ' . $result . ' -> ' . $result1 );
+        return $result1;
+    };
+}, 200 );
 class Alpha {
     public $epsilon = 0;
 
@@ -99,9 +113,9 @@ add_filter( 'alpha_beta', function( $beta ) {
 add_action( 'init', function() {
 
     error_log( '#######################################################################################' );
+    error_log( 'omega( 0 ) = ' . omega( 0 ) );
+    error_log( '#######################################################################################' );
     $alpha  = new Alpha();
     error_log( '$alpha->beta( 0 ) = ' . $alpha->beta( 0 ) );
-    error_log( '#######################################################################################' );
-    error_log( 'omega( 0 ) = ' . omega( 0 ) );
     error_log( '#######################################################################################' . "\n\n\n\n\n" );
 } );
