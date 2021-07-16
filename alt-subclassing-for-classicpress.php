@@ -62,8 +62,9 @@ class Alpha {
     public function beta0( $gamma ) {
         error_log( "beta0():BACKTRACE = \n" . str_replace( ', ', "\n", wp_debug_backtrace_summary() ) );
         error_log( 'beta0():$gamma = ' . $gamma );
+        $epsilon = $this->epsilon;
         $this->epsilon += 1;
-        error_log( 'beta0():$this = ' . print_r( $this, true ) );
+        error_log( 'beta0():$this->epsilon: ' . $epsilon . ' -> ' . $this->epsilon );
         $result = $this->epsilon + $gamma;
         error_log( 'beta0():$result = ' . $result );
         return $result;
