@@ -70,10 +70,34 @@ add_filter( 'alpha_beta', function( $beta ) {
     };
 }, 200 );
 
+function omega( $gamma ) {
+    $delta = apply_filters( 'omega', 'omega0' );
+    return call_user_func( $delta, $gamma );
+}
+
+function omega0( $gamma ) {
+    error_log( 'omega0():$gamma = ' . $gamma );
+    $result = $gamma + 1;
+    error_log( 'omega0():$result = ' . $result );
+    return $result;
+}
+
+add_filter( 'omega', function( $beta ) {
+    $inner_beta1 = $beta;
+    return function( $gamma1 ) use ( $inner_beta1 ) {
+        ++$gamma1;
+        $result1 = call_user_func( $inner_beta1, $gamma1 );
+        $result1 += 10;
+        return $result1;
+    };
+}, 100 );
+
 add_action( 'init', function() {
 
     error_log( '#######################################################################################' );
     $alpha  = new Alpha();
-    $result = $alpha->beta( 0 );
+    error_log( '$alpha->beta( 0 ) = ' . $alpha->beta( 0 ) );
+    error_log( '#######################################################################################' );
+    error_log( 'omega( 0 ) = ' . omega( 0 ) );
     error_log( '#######################################################################################' . "\n\n\n\n\n" );
 } );
