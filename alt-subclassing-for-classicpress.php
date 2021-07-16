@@ -31,7 +31,7 @@ class Alpha {
 }
 
 add_filter( 'alpha_beta', function( $beta ) {
-    error_log( 'installing beta1()' );
+    error_log( 'installing beta1():$beta = ' . print_r( $beta, true ) );
     $inner_beta1 = $beta;
     return function( $_this1, $gamma1 )  use ( $inner_beta1 ) {
         error_log( 'beta1():$gamma1 = ' . $gamma1 );
@@ -51,7 +51,7 @@ add_filter( 'alpha_beta', function( $beta ) {
 }, 100 );
 
 add_filter( 'alpha_beta', function( $beta ) {
-    error_log( 'installing beta2()' );
+    error_log( 'installing beta2():$beta = ' . print_r( $beta, true ) );
     $inner_beta2 = $beta;
     return function( $_this2, $gamma2 ) use ( $inner_beta2 ) {
         error_log( 'beta2():$gamma2 = ' . $gamma2 );
