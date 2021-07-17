@@ -2,7 +2,43 @@
 
 **Although this was originally intended for ClassicPress this idea is equally applicable to WordPress.**
 
-I am often frustrated using action/filter hooks - no appropriate hook exists or even if a hook exists it doesn't provide sufficient context in the arguments. For me, subclassing is a very useful alternative to action/filter hooks. It allows us to install wrappers on the methods of the class to pre/post process the call to the method:
+I find the middleware of Redux extremely useful. The essence of Redux middleware is function wrapping. I think function wrapping can be also be easily done in WordPress as a replacement in WordPress for pluggable functions and subclassed methods of PHP classes.
+
+A wrapper of a function can pre/post process the call to the function or replace the call to the function. This can be easily be done in WordPress:
+
+Transform:
+
+```
+if ( ! function_exists( 'omega' ) ) :
+    function omega( $gamma ) {
+        $result = $gamma + 1;
+        return $result;
+    }
+endif;
+
+```
+
+# to:
+
+
+```
+if ( ! function_exists( 'omega' ) ) :
+    function omega( $gamma ) {
+        $delta = apply_filters( 'omega', 'omega0' );
+        return call_user_func( $delta, $gamma );
+    }
+
+    function omega0( $gamma ) {
+        $result = $gamma + 1;
+        return $result;
+    }
+endif;
+
+```
+
+Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script.
+
+I am often frustrated using action/filter hooks - no appropriate hook exists or even if a hook exists it doesn't provide sufficient context in the arguments. For me, subclassing is a very useful alternative to action/filter hooks. It allows us to install wrappers on the methods of the class that can pre/post process the call to the method or replace the call to the method:
 
 ```
 class Alpha {
@@ -99,6 +135,6 @@ add_filter( 'alpha_beta', function( $beta ) {
 }, 200 );
 ```
 
-Here the inheritance chain is dynamically created at execution time. It is not necessary to specify the next link in the source code. This is completely backward compatible. No change in the source code is need for code that uses the class Alpha - the call to beta() is unchanged. Further, the transformation of Alpha can be done programatically (i.e., a programmer is not needed) - a small script can create the wrapper method beta() and rename the original beta() to beta0(). N.B. The properties accessed by the wrappers must be declared public, which is a negative to consider.
+Here the inheritance chain is dynamically created at execution time. It is not necessary to specify the next link in the source code. This is completely backward compatible. No change in the source code is need for code that uses the class Alpha - the call to beta() is unchanged. Further, the transformation of Alpha can be done programatically (i.e., a programmer is not needed) - a small script can create the wrapper method beta() and rename the original beta() to beta0(). Although, the technique can be applied to any method of any class, it is very easy to mechanically transform all non-static functions of a class which has embedded do_action()/apply_filter() calls with a small script. N.B. The properties accessed by the wrappers must be declared public, which is a negative to consider.
 
-This example is specifically for non-static methods of classes. A small modification will make it work with static methods of classes as well as global functions.
+This example is specifically for non-static methods of classes. A small modification will make it work with static methods of classes.
