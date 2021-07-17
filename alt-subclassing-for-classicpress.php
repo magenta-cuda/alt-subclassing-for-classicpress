@@ -1,9 +1,25 @@
 <?php
 /*
  * Plugin Name: Alt Subclassing for ClassicPress Experiment
- * Description: Proof of concept for ClassicPress issue #749.
+ * Description: Function wrapping as a complementary alternative to pluggable
+ *              functions and subclassed methods of classes.
+ *              Proof of concept for ClassicPress issue #749.
  * Author: Magenta Cuda
  */
+
+# Alternative to pluggable functions
+# Transform:
+
+/*
+if ( ! function_exists( 'omega' ) ) :
+    function omega( $gamma ) {
+        $delta = apply_filters( 'omega', 'omega0' );
+        return call_user_func( $delta, $gamma );
+    }
+endif;
+ */
+
+# to:
 
 if ( ! function_exists( 'omega' ) ) :
     function omega( $gamma ) {
@@ -19,6 +35,8 @@ if ( ! function_exists( 'omega' ) ) :
         return $result;
     }
 endif;
+
+# add some wrappers of omega()
 
 add_filter( 'omega', function( $beta ) {
     $inner_beta1 = $beta;
@@ -45,6 +63,23 @@ add_filter( 'omega', function( $beta ) {
         return $result1;
     };
 }, 200 );
+
+# Alternative to Subclassing
+# Transform:
+
+/*
+class Alpha {
+    public $epsilon = 0;
+    public function beta( $gamma ) {
+        $this->epsilon += 1;
+        $result = $this->epsilon + $gamma;
+        return $result;
+    }
+}
+ */
+
+# to:
+
 class Alpha {
     public $epsilon = 0;
 
@@ -70,6 +105,8 @@ class Alpha {
         return $result;
     }
 }
+
+# add some wrappers of Alpha::beta()
 
 add_filter( 'alpha_beta', function( $beta ) {
     error_log( 'installing beta1():$beta = ' . print_r( $beta, true ) );
