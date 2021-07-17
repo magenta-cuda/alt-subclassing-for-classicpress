@@ -13,8 +13,8 @@
 /*
 if ( ! function_exists( 'omega' ) ) :
     function omega( $gamma ) {
-        $delta = apply_filters( 'omega', 'omega0' );
-        return call_user_func( $delta, $gamma );
+        $result = $gamma + 1;
+        return $result;
     }
 endif;
  */
