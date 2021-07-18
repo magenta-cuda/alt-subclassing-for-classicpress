@@ -38,6 +38,42 @@ endif;
 
 ```
 
+#### Install wrappers for omega() or replace omega().
+
+if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
+    # add some wrappers of omega()
+
+    add_filter( 'omega', function( $beta ) {
+        $inner_beta1 = $beta;
+        return function( $gamma ) use ( $inner_beta1 ) {
+            $gamma1 = $gamma + 1;
+            $result = call_user_func( $inner_beta1, $gamma1 );
+            $result1 = $result + 10;
+            return $result1;
+        };
+    }, 100 );
+
+    add_filter( 'omega', function( $beta ) {
+        $inner_beta2 = $beta;
+        return function( $gamma ) use ( $inner_beta2 ) {
+            $gamma1 = $gamma + 1;
+            $result = call_user_func( $inner_beta2, $gamma1 );
+            $result1 = $result + 100;
+            return $result1;
+        };
+    }, 200 );
+
+} else {
+    # or just replace omega()
+
+    add_filter( 'omega', function( $beta ) {
+        return function( $gamma ) {
+            $result = $gamma + 0.1;
+            return $result;
+        };
+    } );
+}
+
 Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script. In my opinion it is better than pluggable functions since it allows for modification of the function instead of just replacement.
 
 # Subclassing
