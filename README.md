@@ -4,9 +4,11 @@
 
 I find the middleware of Redux extremely useful. The essence of Redux middleware is function wrapping. I think function wrapping can be also be easily done in WordPress as a replacement in WordPress for pluggable functions and subclassed methods of PHP classes.
 
+## Pluggable Functions
+
 A wrapper of a function can pre/post process the call to the function or replace the call to the function. This can be easily be done in WordPress:
 
-Transform:
+#### Transform:
 
 ```
 if ( ! function_exists( 'omega' ) ) :
@@ -18,7 +20,7 @@ endif;
 
 ```
 
-# to:
+#### to:
 
 
 ```
@@ -37,6 +39,8 @@ endif;
 ```
 
 Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script.
+
+# Subclassing
 
 I am often frustrated using action/filter hooks - no appropriate hook exists or even if a hook exists it doesn't provide sufficient context in the arguments. For me, subclassing is a very useful alternative to action/filter hooks. It allows us to install wrappers on the methods of the class that can pre/post process the call to the method or replace the call to the method:
 
@@ -61,6 +65,7 @@ class Alpha1 extends Alpha {
 ```
 The problem with subclassing is the difficulty of installing multiple subclasses of a class. Since the links in the chain of inheritance is specified by the extends clause in the class declaration, then a subclass needs to explicitly specify the next link. Contrast this with action/filter hooks which are installed by priority. With respect to installation action/filter hooks are independent of each other. My proposed solution is way to subclass the methods of a class but with the same ease of installation as action/filter hooks.
 
+#### Transform:
 ```
 class Alpha {
     public $epsilon = 0;
@@ -72,7 +77,7 @@ class Alpha {
 }
 
 ```
-Transform this class to:
+#### to:
 
 ```
 class Alpha {
