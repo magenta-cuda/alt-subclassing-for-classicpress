@@ -36,33 +36,47 @@ if ( ! function_exists( 'omega' ) ) :
     }
 endif;
 
-# add some wrappers of omega()
+# Install wrappers for omega() or replace omega().
 
-add_filter( 'omega', function( $beta ) {
-    $inner_beta1 = $beta;
-    error_log( 'installing omega1():$inner_beta1: ' . print_r( $inner_beta1, true ) );
-    return function( $gamma ) use ( $inner_beta1 ) {
-        $gamma1 = $gamma + 1;
-        error_log( 'omega1():$gamma: ' . $gamma . ' -> ' . $gamma1 );
-        $result = call_user_func( $inner_beta1, $gamma1 );
-        $result1 = $result + 10;
-        error_log( 'omega1():$result: ' . $result . ' -> ' . $result1 );
-        return $result1;
-    };
-}, 100 );
+if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
+    # add some wrappers of omega()
 
-add_filter( 'omega', function( $beta ) {
-    $inner_beta2 = $beta;
-    error_log( 'installing omega2():$inner_beta2: ' . print_r( $inner_beta2, true ) );
-    return function( $gamma ) use ( $inner_beta2 ) {
-        $gamma1 = $gamma + 1;
-        error_log( 'omega2():$gamma: ' . $gamma . ' -> ' . $gamma1 );
-        $result = call_user_func( $inner_beta2, $gamma1 );
-        $result1 = $result + 100;
-        error_log( 'omega2():$result: ' . $result . ' -> ' . $result1 );
-        return $result1;
-    };
-}, 200 );
+    add_filter( 'omega', function( $beta ) {
+        $inner_beta1 = $beta;
+        error_log( 'installing omega1():$inner_beta1: ' . print_r( $inner_beta1, true ) );
+        return function( $gamma ) use ( $inner_beta1 ) {
+            $gamma1 = $gamma + 1;
+            error_log( 'omega1():$gamma: ' . $gamma . ' -> ' . $gamma1 );
+            $result = call_user_func( $inner_beta1, $gamma1 );
+            $result1 = $result + 10;
+            error_log( 'omega1():$result: ' . $result . ' -> ' . $result1 );
+            return $result1;
+        };
+    }, 100 );
+
+    add_filter( 'omega', function( $beta ) {
+        $inner_beta2 = $beta;
+        error_log( 'installing omega2():$inner_beta2: ' . print_r( $inner_beta2, true ) );
+        return function( $gamma ) use ( $inner_beta2 ) {
+            $gamma1 = $gamma + 1;
+            error_log( 'omega2():$gamma: ' . $gamma . ' -> ' . $gamma1 );
+            $result = call_user_func( $inner_beta2, $gamma1 );
+            $result1 = $result + 100;
+            error_log( 'omega2():$result: ' . $result . ' -> ' . $result1 );
+            return $result1;
+        };
+    }, 200 );
+
+} else {
+    # just replace omega()
+
+    add_filter( 'omega', function( $beta ) {
+        return function( $gamma ) {
+            $result = $gamma + 0.1;
+            return $result;
+        };
+    } );
+}
 
 # Alternative to Subclassing
 # Transform:
