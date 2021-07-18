@@ -40,6 +40,7 @@ endif;
 
 #### Install wrappers for omega() or replace omega().
 
+```
 if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
     # add some wrappers of omega()
 
@@ -73,6 +74,7 @@ if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
         };
     } );
 }
+```
 
 Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script. In my opinion it is better than pluggable functions since it allows for modification of the function instead of just replacement.
 
