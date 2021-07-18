@@ -1,6 +1,6 @@
 # alt-subclassing-for-classicpress
 
-**Although this was originally intended for ClassicPress this idea is equally applicable to WordPress.**
+**Although this was originally [intended for ClassicPress](https://github.com/ClassicPress/ClassicPress/issues/749) this idea is equally applicable to WordPress.**
 
 I find the middleware of Redux extremely useful. The essence of Redux middleware is function wrapping. I think function wrapping can be also be easily done in WordPress as a replacement in WordPress for pluggable functions and subclassed methods of PHP classes.
 
@@ -38,7 +38,7 @@ endif;
 
 ```
 
-Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script.
+Although, the technique can be applied to any global function, it is very easy to mechanically transform all pluggable functions with a small script. In my opinion it is better than pluggable functions since it allows for modification of the function instead of just replacement.
 
 # Subclassing
 
