@@ -164,6 +164,11 @@ add_filter2( 'alpha_beta', 'alpha::beta-beta2', function( $beta ) {
     };
 }, 200 );
 
+# Anonymous functions are convenient and because they are implemented using the Closure class can capture context from where the
+# anonymous function is created. However, when used with the WordPress add_filter() function they cannot be removed. add_filter2()
+# is a wrapper for add_filter() that binds the anonymous function to a string handle so that it can be removed using the string
+# handle.
+
 $hook_handlers = [];
 
 function add_filter2( $tag, $handler, $function_to_add, $priority = 10, $accepted_args = 1 ) {
