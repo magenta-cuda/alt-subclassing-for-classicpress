@@ -41,7 +41,7 @@ endif;
 if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
     # add some wrappers of omega()
 
-    add_filter( 'omega', function( $beta ) {
+    add_filter2( 'omega', 'omega-omega1', function( $beta ) {
         $inner_beta1 = $beta;
         error_log( 'installing omega1():$inner_beta1: ' . print_r( $inner_beta1, true ) );
         return function( $gamma ) use ( $inner_beta1 ) {
@@ -54,7 +54,7 @@ if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
         };
     }, 100 );
 
-    add_filter( 'omega', function( $beta ) {
+    add_filter2( 'omega', 'omega-omega2', function( $beta ) {
         $inner_beta2 = $beta;
         error_log( 'installing omega2():$inner_beta2: ' . print_r( $inner_beta2, true ) );
         return function( $gamma ) use ( $inner_beta2 ) {
@@ -70,7 +70,7 @@ if ( ! isset( $_GET[ 'mc_replace' ] ) ) {
 } else {
     # just replace omega()
 
-    add_filter( 'omega', function( $beta ) {
+    add_filter2( 'omega', 'omega-omega0', function( $beta ) {
         return function( $gamma ) {
             $result = $gamma + 0.1;
             return $result;
@@ -122,7 +122,7 @@ class Alpha {
 
 # add some wrappers of Alpha::beta()
 
-add_filter( 'alpha_beta', function( $beta ) {
+add_filter2( 'alpha_beta', 'alpha::beta-beta1', function( $beta ) {
     error_log( 'installing beta1():$beta = ' . print_r( $beta, true ) );
     $inner_beta1 = $beta;
     return function( $_this, $gamma )  use ( $inner_beta1 ) {
@@ -143,7 +143,7 @@ add_filter( 'alpha_beta', function( $beta ) {
     };
 }, 100 );
 
-add_filter( 'alpha_beta', function( $beta ) {
+add_filter2( 'alpha_beta', 'alpha::beta-beta2', function( $beta ) {
     error_log( 'installing beta2():$beta = ' . print_r( $beta, true ) );
     $inner_beta2 = $beta;
     return function( $_this, $gamma ) use ( $inner_beta2 ) {
@@ -163,6 +163,20 @@ add_filter( 'alpha_beta', function( $beta ) {
         return $result2;
     };
 }, 200 );
+
+$hook_handlers = [];
+
+function add_filter2( $tag, $handler, $function_to_add, $priority = 10, $accepted_args = 1 ) {
+    global $hook_handlers;
+    $hook_handlers[ $handler ] = $function_to_add;
+    return add_filter( $tag, $function_to_add, $priority, $accepted_args );
+}
+
+function remove_filter2( $tag, $handler, $priority = 10 ) {
+    global $hook_handlers;
+    $function_to_remove = $hook_handlers[ $handler ];
+    return remove_filter( $tag, $function_to_remove, $priority );
+}
 
 add_action( 'init', function() {
 
